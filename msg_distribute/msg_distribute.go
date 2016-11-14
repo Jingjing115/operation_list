@@ -6,6 +6,7 @@ import (
 	"parse_op/conn"
 	"parse_op/models"
 	"strings"
+	"fmt"
 )
 
 type MsgDistribute struct {
@@ -85,8 +86,10 @@ func (d *MsgDistribute) publishToRedis(data interface{}) {
 	op := data.(models.OP)
 	for _, list := range d.whiteList {
 		if op.OpCode() == list {
-			log.Printf("send msg %s to %s", op.Data(), "op_"+ op.OpCode())
-			d.conn.(*conn.RedisConn).Publish("op_" + op.OpCode(), op.Data())
+			fmt.Printf("send msg %s to %s", op.Data(), "op_"+ op.OpCode())
+			if err := d.conn.(*conn.RedisConn).Publish("op_" + op.OpCode(), op.Data()); err != nil {
+				log.Println(err)
+			}
 		}
 	}
 }
