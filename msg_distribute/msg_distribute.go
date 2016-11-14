@@ -86,7 +86,7 @@ func (d *MsgDistribute) publishToRedis(data interface{}) {
 	op := data.(models.OP)
 	for _, list := range d.whiteList {
 		if op.OpCode() == list {
-			fmt.Printf("send msg %s to %s", op.Data(), "op_"+ op.OpCode())
+			fmt.Printf("send msg %s to %s\n", op.Data(), "op_"+ op.OpCode())
 			if err := d.conn.(*conn.RedisConn).Publish("op_" + op.OpCode(), op.Data()); err != nil {
 				log.Println(err)
 			}
