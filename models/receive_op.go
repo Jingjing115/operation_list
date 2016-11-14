@@ -6,6 +6,7 @@ import (
 	"encoding/binary"
 	"encoding/hex"
 	"fmt"
+	"parse_op/utils"
 )
 
 type ReceiveOp struct {
@@ -49,8 +50,35 @@ func (op *ReceiveOp) Direction() bool {
 	return true
 }
 
+func (op *ReceiveOp)parse_ro() string {
+	deviceAddr := utils.ToAddr(op.Params[:8])
+	status := op.Params[8:]
+	online := false
+	reason := "normal"
+	switch status {
+	case "00":
+		online = false
+	case "01":
+		online = false
+		reason = "power-off"
+	case "02":
+		online = true
+	case "03":
+		online = true
+		reason = "unstable"
+	}
+	return fmt.Sprintf(`{"device_addr":%v, "teleport_addr":%v, "online":%v, "reason":%q, "params":%q}`, deviceAddr, op.TeleportAddr, online, reason, op.Params)
+}
+
 func (op *ReceiveOp) Data() string {
-	return op.String()
+	data := ""
+	switch op.OpCode() {
+	case "ro":
+		data = op.parse_ro()
+	default:
+		data = op.String()
+	}
+	return data
 }
 
 func (op *ReceiveOp) OpCode() string {
