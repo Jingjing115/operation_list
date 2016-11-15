@@ -6,7 +6,6 @@ import (
 	"parse_op/conn"
 	"parse_op/models"
 	"strings"
-	"fmt"
 )
 
 type MsgDistribute struct {
