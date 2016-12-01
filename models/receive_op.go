@@ -51,6 +51,7 @@ func (op *ReceiveOp) Direction() bool {
 }
 
 func (op *ReceiveOp)parse_ro() string {
+	fmt.Println(op.Params)
 	deviceAddr := utils.ToAddr(op.Params[:8])
 	status := op.Params[8:]
 	online := false

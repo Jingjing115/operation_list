@@ -12,5 +12,6 @@ func ToAddr(addr string) uint16 {
 		log.Println(err)
 		return 0
 	}
-	return binary.BigEndian.Uint16(data)
+	return binary.LittleEndian.Uint16(data)
 }
+
