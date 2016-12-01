@@ -6,5 +6,5 @@ import (
 )
 
 func TestToAddr(t *testing.T) {
-	fmt.Println(ToAddr("f5980000"))
+	fmt.Println(ToAddr("ed030100"))
 }
