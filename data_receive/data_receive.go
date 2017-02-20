@@ -13,7 +13,7 @@ import (
 type DataReceive struct {
 	producer  string // rabbit, redis
 	host      string
-	port      string
+	port        string
 	username  string
 	password  string
 	database  string
